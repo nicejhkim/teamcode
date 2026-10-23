@@ -1,0 +1,14 @@
+{
+  "name": "teamcode",
+  "description": "팀 공용 Claude Code 하니스 플러그인 모음",
+  "owner": {
+    "name": "jhkim"
+  },
+  "plugins": [
+    {
+      "name": "teamcode",
+      "source": "./",
+      "description": "팀 공용 Claude Code 하니스 — 킥오프, 이슈 분해, 이슈 하나 구현"
+    }
+  ]
+}
