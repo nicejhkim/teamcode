@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-# teamcode-protect-paths-version: 2
+# teamcode-protect-paths-version: 3
 """PreToolUse 훅 — .claude/protected-paths(.local)에 적힌 경로의 수정·삭제를 차단한다.
 
 teamcode /kickoff가 프로젝트의 .claude/hooks/에 복사하고 .claude/settings.json에 등록한다.
@@ -38,13 +38,21 @@ def load_protected(root):
 
 
 def is_under(path, cwd, protected):
-    p = os.path.normpath(os.path.join(cwd, os.path.expanduser(path)))
-    return any(p == d or p.startswith(d.rstrip("/") + "/") for d in protected)
+    # os.path 기준이라 Windows 구분자(\)와 대소문자 무시도 따른다
+    p = os.path.normcase(os.path.normpath(os.path.join(cwd, os.path.expanduser(path))))
+    for d in protected:
+        d = os.path.normcase(d)
+        try:
+            if os.path.commonpath([p, d]) == d:
+                return True
+        except ValueError:  # Windows에서 드라이브가 다르면
+            pass
+    return False
 
 
 def mentions(cmd, d):
     # /nas 가 /nas-backup 에 걸리지 않도록 경로 경계까지 확인
-    return re.search(re.escape(d) + r"(?=/|[\s\"';&|)]|$)", cmd) is not None
+    return re.search(re.escape(d) + r"(?=[/\\\s\"';&|)]|$)", cmd) is not None
 
 
 def check_bash(cmd, cwd, protected):

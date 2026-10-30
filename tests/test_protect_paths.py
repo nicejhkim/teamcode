@@ -6,6 +6,8 @@ import subprocess
 import sys
 import tempfile
 
+sys.dont_write_bytecode = True  # 훅을 import해도 __pycache__를 남기지 않는다
+
 HOOK = os.path.join(os.path.dirname(__file__), "..", "skills", "kickoff", "assets", "protect-paths.py")
 
 
@@ -100,6 +102,23 @@ def test_install():
     print("install ok")
 
 
+def test_windows_paths():
+    # macOS·Linux에서도 Windows 경로 규칙(ntpath)으로 is_under를 점검한다
+    import importlib.util, ntpath, types
+    spec = importlib.util.spec_from_file_location("protect_paths", HOOK)
+    mod = importlib.util.module_from_spec(spec)
+    spec.loader.exec_module(mod)
+    mod.os = types.SimpleNamespace(path=ntpath)
+    nas = [ntpath.normpath("D:/NAS/masters")]
+    assert mod.is_under(r"D:\NAS\masters\a.mov", r"C:\proj", nas)
+    assert mod.is_under(r"d:\nas\MASTERS\sub\a.srt", r"C:\proj", nas)   # 대소문자
+    assert mod.is_under("D:/NAS/masters/a.mov", r"C:\proj", nas)          # / 구분자
+    assert not mod.is_under(r"D:\NAS\masters-backup\a.mov", r"C:\proj", nas)
+    assert not mod.is_under(r"C:\proj\src\a.ts", r"C:\proj", nas)      # 다른 드라이브
+    print("windows paths ok")
+
+
 if __name__ == "__main__":
     main()
     test_install()
+    test_windows_paths()
