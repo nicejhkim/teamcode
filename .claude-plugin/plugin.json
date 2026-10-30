@@ -1,7 +1,7 @@
 {
   "name": "teamcode",
   "version": "0.6.0",
-  "description": "팀 공용 Claude Code 하니스. 킥오프, PRD를 이슈로 나누기(/issues), 요구사항 한 건을 이슈로(/issue), 이슈 하나 구현(/work).",
+  "description": "팀 공용 Claude Code 하네스. 킥오프, PRD를 이슈로 나누기(/issues), 요구사항 한 건을 이슈로(/issue), 이슈 하나 구현(/work).",
   "author": {
     "name": "jhkim"
   },
