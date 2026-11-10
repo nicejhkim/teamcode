@@ -2,6 +2,11 @@
 
 진행 방식을 바꾼 기록. 최신이 위다. 요구사항 변경은 PRD에 적는다.
 
+## 2026-11-10
+
+- **변경**: `/flutter`를 추가한다. Flutter 클라이언트에 FVM, Riverpod, Firebase Crashlytics·Analytics, Remote Config 버전 게이트를 넣는다.
+- **이유**: 같은 클라이언트 기본 셋업을 프로젝트마다 다시 설명하지 않으려고. `/kickoff`와 `/work`는 스택을 만들지 않는다.
+
 ## 2026-10-23
 
 - **변경**: `/issue`를 추가한다. 요구사항 한 건을 바로 구현하지 않고 `docs/issues/`에 이슈로 남긴 뒤 `/work`로 구현한다. PRD가 없어도 쓸 수 있다.

@@ -89,7 +89,7 @@ docs/PRD.md ───────────── 프로젝트 요구사항
 - **`work-implement`**: 전달받은 계획에 따라 코드를 구현합니다. 통과를 선언하지 않습니다.
 - **`work-review`**: 수용 조건과 불변 규칙을 기준으로 결과를 검토합니다. 파일을 수정할 수 없는 읽기 전용 역할입니다.
 
-`work-review`는 판정을 구현과 다른 AI에게 맡길 수 있습니다. 기본은 `self`(직접 판정)이고, 환경 변수 `TEAMCODE_REVIEWER`를 `cursor`, `codex`, `gemini` 중 하나로 지정하면 해당 CLI에 위임합니다. 리뷰어 CLI는 읽기 전용 모드(`--mode ask`, `--sandbox read-only`, `--approval-mode plan`)로 실행하며, CLI가 없거나 실패하면 `self`로 대체합니다.
+`work-review`는 판정을 구현과 다른 AI에게 맡길 수 있습니다. 기본은 `self`(직접 판정)이고, 환경 변수 `TEAMCODE_REVIEWER`를 `cursor`, `codex`, `gemini`, `agy` 중 하나로 지정하면 해당 CLI에 위임합니다. 리뷰어 CLI는 읽기 전용 모드(cursor는 `--mode ask`, codex는 `--sandbox read-only`, gemini는 `--approval-mode plan`, agy는 `--mode plan`)로 실행하며, CLI가 없거나 실패하면 `self`로 대체합니다.
 
 ```bash
 export TEAMCODE_REVIEWER=cursor
@@ -134,6 +134,7 @@ setx TEAMCODE_REVIEWER cursor                # 영구 설정 (새 터미널부�
 | `/issues` | 스킬 | `docs/PRD.md`를 실행 가능한 이슈로 분해합니다. PRD에 기술 스택이 없으면 구현 결정을 먼저 확인합니다. |
 | `/issue` | 스킬 | 요구사항 한 건을 `docs/issues/NNN-제목.md` 형식의 이슈 하나로 작성합니다. PRD가 없거나 `/issues`를 거치지 않은 프로젝트에서도 사용할 수 있습니다. |
 | `/work` | 스킬 | 이슈 하나를 구현하고 수용 조건에 따라 검증합니다. `work-implement`와 `work-review`를 활용합니다. |
+| `/flutter` | 스킬 | Flutter 클라이언트에 FVM, Riverpod, Firebase Crashlytics·Analytics, Remote Config 버전 게이트를 넣습니다. 요구사항 문서와 이슈는 만들지 않습니다. |
 | `work-implement` | 에이전트 | 전달받은 계획에 따라 구현합니다. 통과를 선언하지 않습니다. |
 | `work-review` | 에이전트 | 수용 조건과 불변 규칙을 기준으로 검토합니다. 파일을 수정하지 않습니다. |
 | `protect-paths` | PreToolUse 훅 | `.claude/protected-paths` 등에 지정한 경로에 대한 지원되는 쓰기 작업을 차단합니다. |
@@ -174,6 +175,7 @@ Windows에서는 `claude --plugin-dir C:\path\to\teamcode`처럼 경로를 지�
 /issues
 /issue
 /work
+/flutter
 ```
 
 다른 플러그인과 명령 이름이 겹치면 `/teamcode:work`처럼 플러그인 이름을 붙여 호출할 수 있습니다.

@@ -29,6 +29,7 @@ tools: Read, Grep, Glob, Bash
 | `cursor` | `cursor-agent -p --mode ask --trust "$PROMPT"` | `--mode ask`. `-f`/`--yolo`를 붙이지 않는다 |
 | `codex` | `codex exec --sandbox read-only "$PROMPT"` | `--sandbox read-only` |
 | `gemini` | `gemini -p "$PROMPT" --approval-mode plan` | `--approval-mode plan`. `-y`를 붙이지 않는다 |
+| `agy` | `agy --mode plan --print "$PROMPT"` | `--mode plan`. `--dangerously-skip-permissions`를 붙이지 않는다 |
 
 순서:
 
@@ -43,7 +44,7 @@ tools: Read, Grep, Glob, Bash
 
 판정을 이렇게 보고한다.
 
-- **리뷰어**: `cursor`, `codex`, `gemini`, `self` 중 실제로 판정한 것. 대체했으면 이유
+- **리뷰어**: `cursor`, `codex`, `gemini`, `agy`, `self` 중 실제로 판정한 것. 대체했으면 이유
 - **판정**: 통과 또는 실패
 - **수용 조건**: 조건마다 근거 한 줄. 검사 출력은 실패한 줄만 붙인다
 - **위반**: 규칙·범위. 없으면 없음
